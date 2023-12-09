@@ -19,8 +19,8 @@ export type Shape = {
 export function Rect({
   r,
   id,
-  highlight = false,
-  highlightColor = "rgb(74,158,255)",
+  // highlight = false,
+  // highlightColor = "rgb(74,158,255)",
   onMouseDown,
   onTouchStart,
   onMouseEnter,
@@ -41,7 +41,7 @@ export function Rect({
     return null;
   }
 
-  const { x, y, width, height, fill } = shape;
+  const { x, y, width, height } = shape;
   const enableEvents =
     onMouseDown || onTouchStart || onMouseEnter || onMouseLeave;
 
