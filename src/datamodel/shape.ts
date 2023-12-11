@@ -1,22 +1,18 @@
 import type { WriteTransaction } from "@rocicorp/reflect";
 import { nanoid } from "nanoid";
-import { z } from "zod";
 import { randInt } from "../util/rand";
 import { generate } from "@rocicorp/rails";
-import { getParse } from "./zod";
 
-export const shapeSchema = z.object({
-  id: z.string(),
-  type: z.literal("rect"),
-  x: z.number(),
-  y: z.number(),
-  width: z.number(),
-  height: z.number(),
-  rotate: z.number(),
-  fill: z.string(),
-});
-
-export type Shape = z.infer<typeof shapeSchema>;
+export type Shape = {
+  id: string;
+  type: "rect";
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  rotate: number;
+  fill: string;
+};
 
 export const {
   get: getShape,
@@ -24,7 +20,7 @@ export const {
   listIDs: listShapeIDs,
   set: setShape,
   delete: deleteShape,
-} = generate("shape", getParse(shapeSchema));
+} = generate<Shape>("shape");
 
 export async function moveShape(
   tx: WriteTransaction,

@@ -33,31 +33,19 @@ const avatars = [
   ["🐣", "Chick"],
 ];
 
-import { z } from "zod";
-import { getParse } from "./zod";
+export type UserInfo = {
+  avatar: string;
+  name: string;
+  color: string;
+};
 
-export const userInfoSchema = z.object({
-  avatar: z.string(),
-  name: z.string(),
-  color: z.string(),
-});
-
-export const clientStateSchema = z.object({
-  id: z.string(),
-  cursor: z.union([
-    z.object({
-      x: z.number(),
-      y: z.number(),
-    }),
-    z.null(),
-  ]),
-  overID: z.string(),
-  selectedID: z.string(),
-  userInfo: userInfoSchema,
-});
-
-export type UserInfo = z.infer<typeof userInfoSchema>;
-export type ClientState = z.infer<typeof clientStateSchema>;
+export type ClientState = {
+  id: string;
+  cursor: { x: number; y: number } | null;
+  overID: string;
+  selectedID: string;
+  userInfo: UserInfo;
+};
 
 export const {
   init: initClientState,
@@ -65,7 +53,7 @@ export const {
   mustGet: mustGetClientState,
   put: putClientState,
   update: updateClientState,
-} = generate("client-state", getParse(clientStateSchema));
+} = generate<ClientState>("client-state");
 
 export async function setCursor(
   tx: WriteTransaction,
