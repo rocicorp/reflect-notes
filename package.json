@@ -1,5 +1,5 @@
 {
-  "name": "reflect-draw",
+  "name": "reflect-notes",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -17,11 +17,12 @@
     "@types/react-dom": "^17.0.11",
     "bootstrap": "^4.6.0",
     "nanoid": "^3.2.0",
-    "next": "^12.1.6",
+    "next": "^13.5.4",
+    "novel": "^0.1.22",
     "prettier": "^2.5.1",
-    "react": "17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-bootstrap": "^1.5.2",
-    "react-dom": "^17.0.2",
     "react-draggable": "^4.4.4",
     "react-hotkeys": "^1.1.4",
     "typescript": "^4.5.5",

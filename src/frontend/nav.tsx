@@ -50,6 +50,13 @@ export function Nav({ r, online }: NavProps) {
               fill="white"
             ></path>
           </svg>
+          <div
+            style={{
+              paddingLeft: "10px",
+            }}
+          >
+            New Note
+          </div>
         </div>
         {/*
         <div
@@ -97,7 +104,7 @@ export function Nav({ r, online }: NavProps) {
       </div>
       <Modal show={aboutVisible} onHide={() => showAbout(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>About Replidraw</Modal.Title>
+          <Modal.Title>About StickyNotes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <p>
@@ -112,13 +119,13 @@ export function Nav({ r, online }: NavProps) {
             <a href={location.href} target="_blank">
               <u>opening this page</u>
             </a>{" "}
-            in two browser windows and moving the boxes around.
+            in two browser windows and create stickynotes collboratively.
           </p>
         </Modal.Body>
         <Modal.Footer>
           <Button
             variant="secondary"
-            href="https://github.com/rocicorp/reflect-draw"
+            href="https://github.com/rocicorp/reflect-stickynotes"
             target="_blank"
           >
             Demo Source
@@ -130,7 +137,7 @@ export function Nav({ r, online }: NavProps) {
       </Modal>
       <Modal show={shareVisible} onHide={() => showShare(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Share Drawing</Modal.Title>
+          <Modal.Title>Share Stickynotes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
