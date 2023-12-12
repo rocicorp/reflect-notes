@@ -1,5 +1,5 @@
 import { initClient, updateClient } from "./client-state";
-import { setShape, updateShape, deleteShape } from "./shape";
+import { setNote, updateNote, deleteNote } from "./note";
 import { mutators as yjsMutators } from "@rocicorp/reflect-yjs";
 
 export type M = typeof mutators;
@@ -7,8 +7,8 @@ export type M = typeof mutators;
 export const mutators = {
   initClient,
   updateClient,
-  setShape,
-  updateShape,
-  deleteShape,
+  setNote,
+  updateNote,
+  deleteNote,
   ...yjsMutators,
 };

@@ -1,22 +1,22 @@
 import type { Reflect } from "@rocicorp/reflect/client";
 import React, { useEffect, useState } from "react";
 import type { M } from "../datamodel/mutators";
-import { useShapeByID } from "../datamodel/subscriptions";
+import { useNoteByID } from "../datamodel/subscriptions";
 import { Editor } from "./editor";
 
-export function Rect({ r, id }: { r: Reflect<M>; id: string }) {
-  const shape = useShapeByID(r, id);
+export function Note({ r, id }: { r: Reflect<M>; id: string }) {
+  const note = useNoteByID(r, id);
 
   type Position = { x: number; y: number };
   const [dragOffset, setDragOffset] = useState<Position | null>(null);
 
   useEffect(() => {
-    if (!shape || !dragOffset) {
+    if (!note || !dragOffset) {
       return undefined;
     }
 
     const listener = (e: PointerEvent) => {
-      void r.mutate.updateShape({
+      void r.mutate.updateNote({
         id,
         x: e.pageX - dragOffset.x,
         y: e.pageY - dragOffset.y,
@@ -33,11 +33,11 @@ export function Rect({ r, id }: { r: Reflect<M>; id: string }) {
       window.removeEventListener("pointermove", listener, { capture: true });
   }, [dragOffset]);
 
-  if (!shape) {
+  if (!note) {
     return null;
   }
 
-  const { x, y, width, height } = shape;
+  const { x, y, width, height } = note;
   const startDrag = (e: React.MouseEvent) => {
     e.stopPropagation();
     setDragOffset({
@@ -70,7 +70,7 @@ export function Rect({ r, id }: { r: Reflect<M>; id: string }) {
           },
         }}
       >
-        <Editor r={r} shape={shape} />
+        <Editor r={r} note={note} />
       </div>
     </div>
   );

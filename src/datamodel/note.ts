@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { randInt } from "../util/rand";
 import { generate } from "@rocicorp/rails";
 
-export type Shape = {
+export type Note = {
   id: string;
   type: "rect";
   x: number;
@@ -14,20 +14,20 @@ export type Shape = {
 };
 
 export const {
-  get: getShape,
-  list: listShapes,
-  listIDs: listShapeIDs,
-  set: setShape,
-  update: updateShape,
-  delete: deleteShape,
-} = generate<Shape>("shape");
+  get: getNote,
+  list: listNotes,
+  listIDs: listNoteIDs,
+  set: setNote,
+  update: updateNote,
+  delete: deleteNote,
+} = generate<Note>("note");
 
 export async function initRoom(tx: WriteTransaction) {
   if (await tx.has("initialized")) {
     return;
   }
 
-  await setShape(tx, {
+  await setNote(tx, {
     id: nanoid(),
     type: "rect",
     x: 100,
@@ -38,7 +38,7 @@ export async function initRoom(tx: WriteTransaction) {
   });
 }
 
-export function randomShape() {
+export function randomNote() {
   return {
     id: nanoid(),
     type: "rect",
@@ -47,5 +47,5 @@ export function randomShape() {
     width: 300,
     height: 300,
     fill: "yellow",
-  } as Shape;
+  } as Note;
 }

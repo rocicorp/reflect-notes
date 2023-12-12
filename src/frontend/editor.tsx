@@ -9,14 +9,14 @@ import * as Y from "yjs";
 import type { M } from "../datamodel/mutators";
 import type { Mutators as YJSMutators } from "@rocicorp/reflect-yjs";
 import { useMyClient } from "../datamodel/subscriptions";
-import type { Shape } from "src/datamodel/shape";
+import type { Note } from "src/datamodel/note";
 
 export function Editor({
   r,
-  shape,
+  note,
 }: {
   r: Reflect<M & YJSMutators>;
-  shape: Shape;
+  note: Note;
 }) {
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] = useState<Provider>();
@@ -28,11 +28,11 @@ export function Editor({
     }
     const userField = client ? { ...client, picture: client.avatar } : null;
     provider.awareness.setLocalStateField("user", userField);
-  }, [client, provider, shape]);
+  }, [client, provider, note]);
 
   useEffect(() => {
     const yDoc = new Y.Doc();
-    const yProvider = new Provider(r, shape.id, yDoc);
+    const yProvider = new Provider(r, note.id, yDoc);
 
     setDoc(yDoc);
     setProvider(yProvider);

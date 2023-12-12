@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styles from "./nav.module.css";
-import { randomShape } from "../datamodel/shape";
+import { randomNote } from "../datamodel/note";
 import type { M } from "../datamodel/mutators";
 import { OnlineStatus } from "./online-status";
 import { useMyClient } from "src/datamodel/subscriptions";
@@ -27,7 +27,7 @@ export function Nav({ r, online }: NavProps) {
   });
 
   const onRectangle = () => {
-    void r.mutate.setShape(randomShape());
+    void r.mutate.setNote(randomNote());
   };
 
   return (

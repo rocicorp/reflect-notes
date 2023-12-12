@@ -1,15 +1,15 @@
 import type { Reflect } from "@rocicorp/reflect/client";
 import { useSubscribe, usePresence } from "@rocicorp/reflect/react";
 import { getClient, mustGetClient } from "./client-state";
-import { getShape, listShapeIDs } from "./shape";
+import { getNote, listNoteIDs } from "./note";
 import type { M } from "./mutators";
 
-export function useShapeIDs(reflect: Reflect<M>) {
-  return useSubscribe(reflect, listShapeIDs, []);
+export function useNoteIDs(reflect: Reflect<M>) {
+  return useSubscribe(reflect, listNoteIDs, []);
 }
 
-export function useShapeByID(reflect: Reflect<M>, id: string) {
-  return useSubscribe(reflect, (tx) => getShape(tx, id), null);
+export function useNoteByID(reflect: Reflect<M>, id: string) {
+  return useSubscribe(reflect, (tx) => getNote(tx, id), null);
 }
 
 export function useCollaboratorIDs(reflect: Reflect<M>) {

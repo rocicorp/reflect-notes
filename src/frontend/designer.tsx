@@ -2,12 +2,12 @@ import type { Reflect } from "@rocicorp/reflect/client";
 import React, { useRef } from "react";
 import { Collaborator } from "./collaborator";
 import { touchToMouse } from "./events";
-import { useShapeIDs, useCollaboratorIDs } from "../datamodel/subscriptions";
+import { useNoteIDs, useCollaboratorIDs } from "../datamodel/subscriptions";
 import type { M } from "../datamodel/mutators";
-import { Rect } from "./rect";
+import { Note } from "./note";
 
 export function Designer({ r }: { r: Reflect<M> }) {
-  const ids = useShapeIDs(r);
+  const ids = useNoteIDs(r);
   const collaboratorIDs = useCollaboratorIDs(r);
 
   const ref = useRef<HTMLDivElement | null>(null);
@@ -39,7 +39,7 @@ export function Designer({ r }: { r: Reflect<M> }) {
       }}
     >
       {ids.map((id) => (
-        <Rect key={`shape-${id}`} r={r} id={id} />
+        <Note key={`note-${id}`} r={r} id={id} />
       ))}
 
       {
