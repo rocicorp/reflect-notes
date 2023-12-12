@@ -1,39 +1,25 @@
 import styles from "./collaborator.module.css";
-import { Rect } from "./rect";
 import type { M } from "../datamodel/mutators";
-import { useClientState } from "../datamodel/subscriptions";
+import { useClient } from "../datamodel/subscriptions";
 import type { Reflect } from "@rocicorp/reflect/client";
-import type { Mutators as YJSMutators } from "@rocicorp/reflect-yjs";
 
 export function Collaborator({
   r,
   clientID,
 }: {
-  r: Reflect<M & YJSMutators>;
+  r: Reflect<M>;
   clientID: string;
 }) {
-  const clientState = useClientState(r, clientID);
+  const client = useClient(r, clientID);
 
-  if (!clientState || !clientState.cursor) {
+  if (!client || !client.cursor) {
     return null;
   }
 
-  const { userInfo, cursor } = clientState;
+  const { cursor } = client;
 
   return (
     <div className={styles.collaborator}>
-      {clientState.selectedID && (
-        <Rect
-          {...{
-            r,
-            key: `selection-${clientState.selectedID}`,
-            id: clientState.selectedID,
-            highlight: true,
-            highlightColor: userInfo.color,
-          }}
-        />
-      )}
-
       <div
         className={styles.cursor}
         style={{
@@ -42,17 +28,17 @@ export function Collaborator({
           overflow: "auto",
         }}
       >
-        <div className={styles.pointer} style={{ color: userInfo.color }}>
+        <div className={styles.pointer} style={{ color: client.color }}>
           ➤
         </div>
         <div
           className={styles.userinfo}
           style={{
-            backgroundColor: userInfo.color,
+            backgroundColor: client.color,
             color: "white",
           }}
         >
-          {userInfo.avatar}&nbsp;{userInfo.name}
+          {client.avatar}&nbsp;{client.name}
         </div>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import { randInt } from "../util/rand";
 import { generate } from "@rocicorp/rails";
-import type { WriteTransaction } from "@rocicorp/reflect";
 
 const colors = [
   "#f94144",
@@ -33,50 +32,23 @@ const avatars = [
   ["🐣", "Chick"],
 ];
 
-export type UserInfo = {
+export type Client = {
+  id: string;
+  cursor: { x: number; y: number } | null;
   avatar: string;
   name: string;
   color: string;
 };
 
-export type ClientState = {
-  id: string;
-  cursor: { x: number; y: number } | null;
-  overID: string;
-  selectedID: string;
-  userInfo: UserInfo;
-};
-
 export const {
-  init: initClientState,
-  get: getClientState,
-  mustGet: mustGetClientState,
-  put: putClientState,
-  update: updateClientState,
-} = generate<ClientState>("client-state");
+  init: initClient,
+  get: getClient,
+  mustGet: mustGetClient,
+  set: setClient,
+  update: updateClient,
+} = generate<Client>("client-state");
 
-export async function setCursor(
-  tx: WriteTransaction,
-  { x, y }: { x: number; y: number }
-): Promise<void> {
-  await updateClientState(tx, { id: tx.clientID, cursor: { x, y } });
-}
-
-export async function overShape(
-  tx: WriteTransaction,
-  shapeID: string
-): Promise<void> {
-  await updateClientState(tx, { id: tx.clientID, overID: shapeID });
-}
-
-export async function selectShape(
-  tx: WriteTransaction,
-  shapeID: string
-): Promise<void> {
-  await updateClientState(tx, { id: tx.clientID, selectedID: shapeID });
-}
-
-export function randUserInfo(): UserInfo {
+export function randUserInfo() {
   const [avatar, name] = avatars[randInt(0, avatars.length - 1)];
   return {
     avatar,

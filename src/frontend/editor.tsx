@@ -8,8 +8,8 @@ import { Editor as NovelEditor } from "novel";
 import * as Y from "yjs";
 import type { M } from "../datamodel/mutators";
 import type { Mutators as YJSMutators } from "@rocicorp/reflect-yjs";
-import { useMyUserInfo } from "../datamodel/subscriptions";
-import type { Shape } from "./rect";
+import { useMyClient } from "../datamodel/subscriptions";
+import type { Shape } from "src/datamodel/shape";
 
 export function Editor({
   r,
@@ -19,19 +19,16 @@ export function Editor({
   shape: Shape;
 }) {
   const [doc, setDoc] = useState<Y.Doc>();
-
   const [provider, setProvider] = useState<Provider>();
-
-  const userInfo = useMyUserInfo(r);
+  const client = useMyClient(r);
 
   useEffect(() => {
-    if (userInfo && provider) {
-      provider.awareness.setLocalStateField("user", {
-        ...userInfo,
-        picture: userInfo?.avatar,
-      });
+    if (!provider) {
+      return;
     }
-  }, [userInfo, provider, shape]);
+    const userField = client ? { ...client, picture: client.avatar } : null;
+    provider.awareness.setLocalStateField("user", userField);
+  }, [client, provider, shape]);
 
   useEffect(() => {
     const yDoc = new Y.Doc();
@@ -50,7 +47,7 @@ export function Editor({
   }
 
   return (
-    userInfo && (
+    client && (
       <NovelEditor
         extensions={[
           Collaboration.configure({
@@ -58,7 +55,7 @@ export function Editor({
           }),
           CollaborationCursor.configure({
             provider,
-            user: { ...userInfo, picture: userInfo?.avatar },
+            user: { ...client, picture: client?.avatar },
           }),
         ]}
         defaultValue=""

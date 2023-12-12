@@ -7,7 +7,7 @@ import styles from "./nav.module.css";
 import { randomShape } from "../datamodel/shape";
 import type { M } from "../datamodel/mutators";
 import { OnlineStatus } from "./online-status";
-import { useMyUserInfo } from "src/datamodel/subscriptions";
+import { useMyClient } from "src/datamodel/subscriptions";
 
 type NavProps = {
   r: Reflect<M>;
@@ -18,7 +18,7 @@ export function Nav({ r, online }: NavProps) {
   const [aboutVisible, showAbout] = useState(false);
   const [shareVisible, showShare] = useState(false);
   const urlBox = useRef<HTMLInputElement>(null);
-  const userInfo = useMyUserInfo(r);
+  const client = useMyClient(r);
 
   useEffect(() => {
     if (shareVisible) {
@@ -27,7 +27,7 @@ export function Nav({ r, online }: NavProps) {
   });
 
   const onRectangle = () => {
-    r.mutate.createShape(randomShape());
+    void r.mutate.setShape(randomShape());
   };
 
   return (
@@ -91,19 +91,19 @@ export function Nav({ r, online }: NavProps) {
         </div>
         <div className={styles.spacer}></div>
         <OnlineStatus online={online} />
-        {userInfo && (
+        {client && (
           <div
             className={styles.user}
             style={{
-              backgroundColor: userInfo.color,
+              backgroundColor: client.color,
             }}
           >
-            {userInfo.avatar} {userInfo.name}
+            {client.avatar} {client.name}
           </div>
         )}
       </div>
       <Modal show={aboutVisible} onHide={() => showAbout(false)} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton placeholder>
           <Modal.Title>About StickyNotes</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -136,7 +136,7 @@ export function Nav({ r, online }: NavProps) {
         </Modal.Footer>
       </Modal>
       <Modal show={shareVisible} onHide={() => showShare(false)} centered>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton placeholder>
           <Modal.Title>Share Stickynotes</Modal.Title>
         </Modal.Header>
         <Modal.Body>

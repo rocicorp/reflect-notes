@@ -26,12 +26,10 @@ export default function Home() {
     });
 
     const defaultUserInfo = randUserInfo();
-    void r.mutate.initClientState({
+    void r.mutate.initClient({
       id: r.clientID,
       cursor: null,
-      overID: "",
-      selectedID: "",
-      userInfo: defaultUserInfo,
+      ...defaultUserInfo,
     });
     void r.mutate.initShapes();
 

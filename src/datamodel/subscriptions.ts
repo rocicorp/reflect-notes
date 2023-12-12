@@ -1,6 +1,6 @@
 import type { Reflect } from "@rocicorp/reflect/client";
 import { useSubscribe, usePresence } from "@rocicorp/reflect/react";
-import { getClientState, mustGetClientState } from "./client-state";
+import { getClient, mustGetClient } from "./client-state";
 import { getShape, listShapeIDs } from "./shape";
 import type { M } from "./mutators";
 
@@ -17,35 +17,10 @@ export function useCollaboratorIDs(reflect: Reflect<M>) {
   return clientIDs.filter((id) => id !== reflect.clientID);
 }
 
-export function useMyUserInfo(reflect: Reflect<M>) {
-  return useSubscribe(
-    reflect,
-    async (tx) => {
-      const cs = await mustGetClientState(tx, tx.clientID);
-      return cs.userInfo;
-    },
-    null
-  );
+export function useMyClient(reflect: Reflect<M>) {
+  return useSubscribe(reflect, (tx) => mustGetClient(tx, tx.clientID), null);
 }
 
-export function useSelectionState(reflect: Reflect<M>) {
-  return useSubscribe(
-    reflect,
-    async (tx) => {
-      const cs = await mustGetClientState(tx, tx.clientID);
-      const { selectedID, overID } = cs;
-      return { selectedID, overID };
-    },
-    { selectedID: "", overID: "" }
-  );
-}
-
-export function useClientState(reflect: Reflect<M>, clientID: string) {
-  return useSubscribe(
-    reflect,
-    async (tx) => {
-      return await getClientState(tx, clientID);
-    },
-    null
-  );
+export function useClient(reflect: Reflect<M>, clientID: string) {
+  return useSubscribe(reflect, (tx) => getClient(tx, clientID), null);
 }
