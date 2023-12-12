@@ -25,9 +25,6 @@ export function Note({ r, id }: { r: Reflect<M>; id: string }) {
     };
 
     window.addEventListener("pointermove", listener, { capture: true });
-    window.addEventListener("lostpointercapture", () => setDragOffset(null), {
-      capture: true,
-    });
 
     return () =>
       window.removeEventListener("pointermove", listener, { capture: true });
@@ -59,7 +56,9 @@ export function Note({ r, id }: { r: Reflect<M>; id: string }) {
         width: width + 2,
         height: height + 2,
       }}
-      onMouseDown={(e) => startDrag(e)}
+      onPointerDown={(e) => startDrag(e)}
+      onLostPointerCapture={() => setDragOffset(null)}
+      onPointerUp={() => setDragOffset(null)}
     >
       <div
         className="container"
