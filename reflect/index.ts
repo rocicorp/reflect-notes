@@ -1,9 +1,11 @@
 import type { ReflectServerOptions } from "@rocicorp/reflect/server";
-import { serverMutators, M } from "../src/datamodel/mutators.js";
+import { mutators, M } from "../src/datamodel/mutators.js";
+import { initRoom } from "../src/datamodel/shape.js";
 
 function makeOptions(): ReflectServerOptions<M> {
   return {
-    mutators: serverMutators,
+    mutators,
+    roomStartHandler: initRoom,
   };
 }
 

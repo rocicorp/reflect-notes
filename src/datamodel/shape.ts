@@ -22,15 +22,20 @@ export const {
   delete: deleteShape,
 } = generate<Shape>("shape");
 
-export async function initShapes(tx: WriteTransaction) {
+export async function initRoom(tx: WriteTransaction) {
   if (await tx.has("initialized")) {
     return;
   }
-  const shapes = Array.from({ length: 1 }, () => randomShape());
-  await Promise.all([
-    tx.set("initialized", true),
-    ...shapes.map((s) => setShape(tx, s)),
-  ]);
+
+  await setShape(tx, {
+    id: nanoid(),
+    type: "rect",
+    x: 100,
+    y: 100,
+    width: 300,
+    height: 300,
+    fill: "yellow",
+  });
 }
 
 export function randomShape() {
@@ -41,7 +46,6 @@ export function randomShape() {
     y: randInt(0, 400),
     width: 300,
     height: 300,
-    rotate: 90,
     fill: "yellow",
   } as Shape;
 }

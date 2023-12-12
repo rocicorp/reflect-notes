@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Reflect } from "@rocicorp/reflect/client";
 import { Designer } from "../../frontend/designer";
 import { Nav } from "../../frontend/nav";
-import { M, clientMutators } from "../../datamodel/mutators";
+import { M, mutators } from "../../datamodel/mutators";
 import { randUserInfo } from "../../datamodel/client-state";
 import { reflectServer } from "../../util/host";
 import { nanoid } from "nanoid";
@@ -22,7 +22,7 @@ export default function Home() {
       onOnlineChange: setOnline,
       userID,
       roomID,
-      mutators: clientMutators,
+      mutators,
     });
 
     const defaultUserInfo = randUserInfo();
@@ -31,7 +31,6 @@ export default function Home() {
       cursor: null,
       ...defaultUserInfo,
     });
-    void r.mutate.initShapes();
 
     setReflectClient(r);
   }, []);

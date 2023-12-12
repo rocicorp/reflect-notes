@@ -1,23 +1,14 @@
 import { initClient, updateClient } from "./client-state";
-import { setShape, updateShape, deleteShape, initShapes } from "./shape";
+import { setShape, updateShape, deleteShape } from "./shape";
 import { mutators as yjsMutators } from "@rocicorp/reflect-yjs";
 
-export type M = typeof serverMutators;
+export type M = typeof mutators;
 
-export const serverMutators = {
+export const mutators = {
   initClient,
   updateClient,
   setShape,
   updateShape,
   deleteShape,
-  // TODO: Use roomStartHandler
-  initShapes,
   ...yjsMutators,
-};
-
-export const clientMutators: M = {
-  ...serverMutators,
-  initShapes: async () => {
-    //
-  },
 };
