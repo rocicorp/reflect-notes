@@ -257,20 +257,10 @@ h3 .tiptap-code {
   pointer-events: none;
 }
 
-
-
-.container { 
-  /* display: grid;
-  grid-template: "container";
-  place-items: top;
-  place-content: center; */
-  overflow: auto;
-}
-
 .editor .ProseMirror {
   padding: 1rem;
-  padding-left: .5rem;
-  padding-right: .5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .editor .drag-handle {
